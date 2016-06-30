@@ -5,7 +5,9 @@ require 'uri'
 require 'json'
 
 class NimbleAPI
-	require '../sdk-ruby/lib/NimbleAPI/auth'
+	require_relative 'NimbleAPI/config'
+	require_relative 'NimbleAPI/auth'
+	require_relative 'NimbleAPI/payments'
 
 	attr_reader :clientId, :clientSecret, :access_token
 

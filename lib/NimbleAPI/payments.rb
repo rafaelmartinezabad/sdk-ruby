@@ -1,7 +1,5 @@
 class NimbleAPI
 	class Payments
-		require '../sdk-ruby/lib/NimbleAPI/config'
-
 		def sendPayment ( oNimbleAPI )
 
 			url = NimbleAPI::Config::NIMBLE_API_BASE_URL + "/v2/payments"

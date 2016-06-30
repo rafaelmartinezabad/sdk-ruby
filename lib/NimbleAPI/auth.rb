@@ -6,8 +6,6 @@ require 'json'
 
 class NimbleAPI
 	class Auth
-		require '../sdk-ruby/lib/NimbleAPI/config'
-
 		def getBasicAuthorization( clientId, clientSecret )
 			
 			sourcenc = Base64.strict_encode64("#{clientId.to_str}:#{clientSecret.to_str}")
