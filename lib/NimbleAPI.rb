@@ -9,12 +9,20 @@ class NimbleAPI
 	require_relative 'NimbleAPI/auth'
 	require_relative 'NimbleAPI/payments'
 
-	attr_reader :clientId, :clientSecret, :access_token
+	attr_reader :clientId, :clientSecret, :access_token, :sandbox
 
-	def initialize( clientId, clientSecret )
+	def initialize( clientId, clientSecret, sandbox = false )
 		@clientId = clientId
 		@clientSecret = clientSecret
+		@sandbox = sandbox
 		@access_token = NimbleAPI::Auth.new.getBasicAuthorization( clientId, clientSecret )
+	end
+
+	def apiUrl (path = "")
+		url_base = NimbleAPI::Config::NIMBLE_API_BASE_URL
+		if @sandbox
+			url_base = NimbleAPI::Config::NIMBLE_API_BASE_URL_DEMO
+		return url_base + path
 	end
 
 	def restApiCall ( url = "", header = {}, method = "", body = {})

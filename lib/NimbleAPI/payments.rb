@@ -2,7 +2,7 @@ class NimbleAPI
 	class Payments
 		def sendPayment ( oNimbleAPI, oPayment )
 
-			url = NimbleAPI::Config::NIMBLE_API_BASE_URL + "/v2/payments"
+			url = oNimbleAPI.apiUrl("/v2/payments")
 
 			header = {
 			  'Content-Type' => "application/json",
