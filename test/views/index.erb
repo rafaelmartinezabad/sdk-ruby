@@ -1,0 +1,9 @@
+<h1>PAYMENT-TEST</h1>
+
+<pre><%= oSendPay.to_yaml %></pre>
+
+<% if oSendPay['result']['code'] == 200 %>
+	</br></br>
+	<a href="<%= oSendPay['data']['paymentUrl'] %>"><%= oSendPay['data']['paymentUrl'] %></a>
+<% end %>
+
