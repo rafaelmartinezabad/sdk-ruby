@@ -22,6 +22,7 @@ class NimbleAPI
 		url_base = NimbleAPI::Config::NIMBLE_API_BASE_URL
 		if @sandbox
 			url_base = NimbleAPI::Config::NIMBLE_API_BASE_URL_DEMO
+		end
 		return url_base + path
 	end
 

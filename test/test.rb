@@ -10,9 +10,11 @@ require '../lib/NimbleAPI.rb'
 class Test < Sinatra::Base
 
   get '/' do
+    sandbox = false
     oNimbleAPI = NimbleAPI.new(
       '729DFCD7A2B4643A0DA3D4A7E537FC6E',
-      'jg26cI3O1mB0$eR&fo6a2TWPmq&gyQoUOG6tClO%VE*N$SN9xX27@R4CTqi*$4EO'
+      'jg26cI3O1mB0$eR&fo6a2TWPmq&gyQoUOG6tClO%VE*N$SN9xX27@R4CTqi*$4EO',
+      sandbox
     )
     oPayment = {
         'amount' => 100,
