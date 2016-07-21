@@ -1,10 +1,15 @@
-<h1>PAYMENT-TEST</h1>
+<h1>TEST</h1>
 
-<h4 style="margin-bottom: -18px;">DATA_RESPONSE</h4>
-<pre><%= oSendPay.to_yaml %></pre>
+<pre style="margin-top: -22px;">Client credentials <%= valid == 404 ? 'no valid' : 'valid' %></pre>
 
-<% if oSendPay['result']['code'] == 200 %>
-	</br></br>
-	<a href="<%= oSendPay['data']['paymentUrl'] %>"><%= oSendPay['data']['paymentUrl'] %></a>
-<% end %>
+<h4 style="margin-bottom: 7px">PAYMENTS</h4>
+<pre style="margin-top: -6px;"><a href="/sendPayment">sendPayment</a></pre>
+<pre style="margin-top: -6px;"><a href="/getStatusByTransactionId">getStatusByTransactionId</a></pre>
+<pre style="margin-top: -6px;"><a href="/getStatusByMerchantOrderId">getStatusByMerchantOrderId</a></pre>
+<pre style="margin-top: -6px;"><a href="/updateMerchantOrderId">updateMerchantOrderId</a></pre>
 
+<h4 style="margin-bottom: 7px">CREDENTIALS</h4>
+<pre style="margin-top: -6px;"><a href="/check">check</a></pre>
+
+<h4 style="margin-bottom: 7px">AUTH</h4>
+<pre style="margin-top: -6px;"><a href="/getAuth3Url">getAuth3Url</a> -> getAdvanceAuthorization</pre>
