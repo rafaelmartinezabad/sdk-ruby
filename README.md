@@ -40,3 +40,56 @@ oPayment = {
     'merchantOrderId' => 1234,
 }
 ```
+
+## Client’s  information
+Client information refers to an array called “oNimbleAPI” that includes client’s credentials.
+
+- Client’s credentials consist of a clientid, clientsecret and sandbox. Their value is the  `Api_Client_Id` and the `Client_Secret` codes  generated when creating a Payment gateway in the Nimble dashboard.
+
+## Example of a Payment generation
+To generate a Payment you will need to execute the following steps:
+
+- Build an object with the payment information
+- Build an object with client information (`Api_Client_Id`, `Client_Secret` and `sandbox`)
+- Create a `oNimbleAPI` object
+- Use the `sendPayment` method in the class `NimbleAPI::Payments` to send the payment
+
+```ruby
+require './sdk-ruby/lib/NimbleAPI.rb'
+
+# build an array with payment information
+oPayment = {
+    'amount' => 100,
+    'currency' => "EUR",
+    'paymentSuccessUrl' => "https://my-commerce.com/payments/success",
+    'paymentErrorUrl' => "https://my-commerce.com/payments/error",
+    'merchantOrderId' => 1234,
+}
+
+// build an array with client API information
+sandbox = false
+oNimbleAPI = NimbleAPI.new(
+    '729DFCD7A2B4643A0DA3D4A7E537FC6E',
+    'jg26cI3O1mB0$eR&fo6a2TWPmq&gyQoUOG6tClO%VE*N$SN9xX27@R4CTqi*$4EO',
+    sandbox
+)
+
+response = NimbleAPI::Payments.new.sendPayment( oNimbleAPI, oPayment )
+```
+If the sendPayment call is correct, the response will contain the new transaction id. This transaction id could be used later to view and check the new transaction in the NimblePayments's site. Also is returned the URL to show to the client for introduce the payment data information.
+
+That payment URL must contain all the parameters needed, just for charge that URL in the web browser (or web view in the case of mobile devices).
+
+##Environment
+There are two different environment options:
+- Sandbox.It is used in the demo environment to make tests.
+- Real. It is used to work in the real environment.
+
+The sandbox environment is disabled by default. To activate it, the variable `sandbox` must be manually set to `true`.
+
+## Test
+
+In `test` folder you will find scripts implementing a basics operations that uses NimbleePayments SDK as payment platform.
+
+## Documentation
+Please see [Apiary](http://docs.nimblepublicapi.apiary.io/#) for up-to-date documentation.
