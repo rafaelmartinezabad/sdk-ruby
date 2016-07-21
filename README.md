@@ -31,7 +31,7 @@ A `payment` term refers to an object that contains all the data needed in order 
 ```ruby
 require './sdk-ruby/lib/NimbleAPI.rb'
 
-# build an array with payment information
+# build an object with payment information
 oPayment = {
     'amount' => 100,
     'currency' => "EUR",
@@ -57,7 +57,7 @@ To generate a Payment you will need to execute the following steps:
 ```ruby
 require './sdk-ruby/lib/NimbleAPI.rb'
 
-# build an array with payment information
+# build an object with payment information
 oPayment = {
     'amount' => 100,
     'currency' => "EUR",
@@ -66,7 +66,7 @@ oPayment = {
     'merchantOrderId' => 1234,
 }
 
-// build an array with client API information
+# build an object with client API information
 sandbox = false
 oNimbleAPI = NimbleAPI.new(
     '729DFCD7A2B4643A0DA3D4A7E537FC6E',
