@@ -35,8 +35,8 @@ require './sdk-ruby/lib/NimbleAPI.rb'
 oPayment = {
     'amount' => 100,
     'currency' => "EUR",
-    'paymentSuccessUrl' => "http://www.google.es/&q=EXITO",
-    'paymentErrorUrl' => "http://www.google.es/&q=ERROR",
+    'paymentSuccessUrl' => "https://my-commerce.com/payments/success",
+    'paymentErrorUrl' => "https://my-commerce.com/payments/error",
     'merchantOrderId' => 1234,
 }
 ```
