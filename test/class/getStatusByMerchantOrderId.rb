@@ -5,8 +5,12 @@ require '../lib/NimbleAPI.rb'
 
 class GetStatusByMerchantOrderId
 
-  def getStatusByMerchantOrderId( oNimbleAPI )
-    merchantOrderId = 1234
+  def method( cc, merchantOrderId )
+  	oNimbleAPI = NimbleAPI.new(
+  	  cc.clientId,
+  	  cc.clientSecret,
+      cc.sandbox
+    )
     return NimbleAPI::Payments.new.getStatusByMerchantOrderId( oNimbleAPI, merchantOrderId )
   end
 

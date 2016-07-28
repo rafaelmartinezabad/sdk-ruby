@@ -1,7 +1,15 @@
 <h1>UPDATE_MERCHANT_ORDER_ID-TEST</h1>
 
-<h4 style="margin-bottom: -18px;">DATA_RESPONSE</h4>
-<pre><%= obj_res.to_yaml %></pre>
+<% if obj_res == nil %>
+	<form action="/updateMerchantOrderId">
+		<input type="text" name="transactionId" placeholder="transactionId"></br>
+		<input type="text" name="merchantOrderId" placeholder="merchantOrderId"></br>
+		<input type="submit" value="Send">
+	</form> 
+<% else %>
+	<h4 style="margin-bottom: -18px;">DATA_RESPONSE</h4>
+	<pre><%= obj_res.to_yaml %></pre>
+<% end %>
 
 </br></br>---</br>
 <a href="/">Back</a>

@@ -5,10 +5,14 @@ require '../lib/NimbleAPI.rb'
 
 class UpdateMerchantOrderId
 
-  def updateMerchantOrderId( oNimbleAPI )
-    transactionId = 1000002108
+  def method( cc, transactionId, merchantOrderId )
+  	oNimbleAPI = NimbleAPI.new(
+  	  cc.clientId,
+  	  cc.clientSecret,
+      cc.sandbox
+    )
     oMerchantOrderId = {
-      "merchantOrderId" => "TEST"
+      "merchantOrderId" => merchantOrderId
     }
     return NimbleAPI::Payments.new.updateMerchantOrderId( oNimbleAPI, transactionId, oMerchantOrderId )
   end

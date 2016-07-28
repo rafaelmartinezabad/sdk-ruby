@@ -1,11 +1,12 @@
-<h1>SENDPAYMENT-TEST</h1>
+<h1>SEND_PAYMENT-TEST</h1>
 
 <h4 style="margin-bottom: -18px;">DATA_RESPONSE</h4>
 <pre><%= obj_res.to_yaml %></pre>
 
-<% if obj_res['result']['code'] == 200 %>
-	</br></br>
-	<a href="<%= obj_res['data']['paymentUrl'] %>"><%= obj_res['data']['paymentUrl'] %></a>
+<% if defined? obj_res['result']['code'] %>
+	<% if obj_res['result']['code'] == 200 %>
+		<a href="<%= obj_res['data']['paymentUrl'] %>">go to TPV</a>
+	<% end %>
 <% end %>
 
 </br></br>---</br>

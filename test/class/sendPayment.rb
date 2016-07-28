@@ -5,7 +5,13 @@ require '../lib/NimbleAPI.rb'
 
 class SendPayment
 
-  def sendPayment( oNimbleAPI )
+  def method( cc )
+    oNimbleAPI = NimbleAPI.new(
+      cc.clientId,
+      cc.clientSecret,
+      cc.sandbox
+    )
+    oNimbleAPI.changeDefaultLanguage('es') #Optional
     oPayment = {
       'amount' => 100,
       'currency' => "EUR",

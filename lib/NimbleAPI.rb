@@ -9,11 +9,23 @@ class NimbleAPI
 	require_relative 'NimbleAPI/auth'
 	require_relative 'NimbleAPI/payments'
 	require_relative 'NimbleAPI/credentials'
+	require_relative 'NimbleAPI/account'
+
+	attr_reader :lang
 
 	def initialize( clientId, clientSecret, sandbox = false )
 		@sandbox = sandbox
 		@clientId = clientId
 		@clientSecret = clientSecret
+		@lang = 'en'
+	end
+
+	def changeDefaultLanguage( lang )
+		@lang = lang
+	end
+
+	def getRefreshToken
+		return @refresh_token
 	end
 
 	def getRefreshToken
@@ -39,7 +51,7 @@ class NimbleAPI
 		gaa = NimbleAPI::Auth.new( @clientId, @clientSecret ).getAdvanceAuthorization( code )
 		@access_token = ""
 		@refresh_token = ""
-		if defined? gaa['access_token'] && defined? gaa['refresh_token']
+		if gaa != nil && defined? gaa['access_token'] && defined? gaa['refresh_token']
 			@access_token = gaa['access_token']
 			@refresh_token = gaa['refresh_token']			
 		end
@@ -64,20 +76,24 @@ class NimbleAPI
 		http.use_ssl = true
 		case method
 			when "GET"
-				request_payment = Net::HTTP::Get.new(uri.request_uri, header)
+				request = Net::HTTP::Get.new(uri.request_uri, header)
 			when "PUT"
-				request_payment = Net::HTTP::Put.new(uri.request_uri, header)
-				request_payment.body = body.to_s.gsub('=>', ':')
+				request = Net::HTTP::Put.new(uri.request_uri, header)
+				request.body = body.to_s.gsub('=>', ':')
 			else # "POST"
-				request_payment = Net::HTTP::Post.new(uri.request_uri, header)
-				request_payment.body = body.to_s.gsub('=>', ':')
+				request = Net::HTTP::Post.new(uri.request_uri, header)
+				request.body = body.to_s.gsub('=>', ':')
 		end
 		begin
-			response_payment = http.request(request_payment)
-			res_body = JSON.parse(response_payment.body)
+			response = http.request(request)
 		rescue Exception => msg
-			res_body = JSON.parse('{"result": {"code":408, "info": "Request Timeout"}}')
+			return nil
 		end
-		return res_body
+		case response
+		when Net::HTTPSuccess
+			return JSON.parse(response.body)
+		else
+			return nil
+		end
 	end
 end

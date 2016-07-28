@@ -1,7 +1,14 @@
 <h1>GET_STATUS_BY_MERCHANT_ORDER_ID-TEST</h1>
 
-<h4 style="margin-bottom: -18px;">DATA_RESPONSE</h4>
-<pre><%= obj_res.to_yaml %></pre>
+<% if obj_res == nil %>
+	<form action="/getStatusByMerchantOrderId">
+		<input type="text" name="merchantOrderId" placeholder="merchantOrderId">
+		<input type="submit" value="Send">
+	</form> 
+<% else %>
+	<h4 style="margin-bottom: -18px;">DATA_RESPONSE</h4>
+	<pre><%= obj_res.to_yaml %></pre>
+<% end %>
 
 </br></br>---</br>
 <a href="/">Back</a>

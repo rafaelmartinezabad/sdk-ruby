@@ -1,8 +1,21 @@
 <h1>GET_ADVANCE_AUTHORIZATION-TEST</h1>
 
-<h4 style="margin-bottom: -5px;">DATA_RESPONSE</h4>
-<pre>access_token = <%= obj_res["access_token"] %>
-refresh_token = <%= obj_res["refresh_token"] %></pre>
+<% if code != true %>
+	<pre>Step 1 -> <a href="<%= obj_res %>">getAuth3</a></pre>
+<% else %>
+	<h4 style="margin-bottom: -18px;">DATA_RESPONSE</h4>
+	<pre>---
+	<% obj_res.sort.each do |k, v| %>
+		<% if k == "access_token" || k == "refresh_token" %>
+<%= k %>:
+<textarea style="width: 1260px; height: 211px; resize: none;" readonly><%= v %></textarea>
+		<% else %>
+<%= k %>: <%= v %>
+		<% end %>
+</br>
+    <% end %>
+	</pre>
+<% end %>
 
 </br></br>---</br>
 <a href="/">Back</a>

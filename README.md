@@ -3,8 +3,14 @@ NimblePayments SDK for Ruby
 
 The NimblePayments SDK for Ruby makes it easy to add payment services to your e-commerce. It connects your site to the NimblePayments API directly.
 
+## Release notes
+
+### 1.0.0
+- First live release
+- It includes the single payment service
+
 ## Requirements
-* Ruby on Rails 1.9 or above
+* ruby 2.3.1p112 (2016-04-26 revision 54768) [x86_64-linux] or above
 
 ## Installation
 The SDK zip from the GitHub repository contains the NimblePayments SDK for Ruby tool, including all its dependencies. Follow the next steps to install it:
@@ -17,7 +23,7 @@ The SDK zip from the GitHub repository contains the NimblePayments SDK for Ruby 
 Once you have completed the Installation processes, you are ready to generate a payment.
 
 ## Payments 
-In order to execute a payment, you will need to create a `oNimbleApi` object with client information, `oPayment` object with payment information and use the `sendPayment` method in the class `NimbleAPI::Payments` to send the payment
+In order to execute a payment, you will need to create a `oPayment` object with payment information and use the `sendPayment` method in the class `NimbleAPI::Payments` to send the payment
 
 ### Payment’s information
 A `payment` term refers to an object that contains all the data needed in order to execute a payment. This object is an array that must be filled with the following parameters:
@@ -44,7 +50,7 @@ oPayment = {
 ## Client’s  information
 Client information refers to an array called “oNimbleAPI” that includes client’s credentials.
 
-- Client’s credentials consist of a clientid, clientsecret and sandbox. Their value is the  `Api_Client_Id` and the `Client_Secret` codes  generated when creating a Payment gateway in the Nimble dashboard.
+- Client’s credentials consist of a clientid, clientsecret and sandbox. Their value is the  `client_Id` and the `client_Secret` codes  generated when creating a Payment gateway in the Nimble dashboard.
 
 ## Example of a Payment generation
 To generate a Payment you will need to execute the following steps:

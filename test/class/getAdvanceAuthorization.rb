@@ -5,7 +5,12 @@ require '../lib/NimbleAPI.rb'
 
 class GetAdvanceAuthorization
 
-  def getAdvanceAuthorization( oNimbleAPI, code )
+  def method( cc, code )
+  	oNimbleAPI = NimbleAPI.new(
+  	  cc.clientId,
+  	  cc.clientSecret,
+      cc.sandbox
+    )
     oNimbleAPI.authorize( code )
     return {
     	"access_token" => oNimbleAPI.getAccessToken,

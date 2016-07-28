@@ -1,0 +1,31 @@
+<h1>REFRESH_ADVANCE_AUTHORIZATION-TEST</h1>
+
+<% if obj_res == nil %>
+	<pre>If you don't have refresh_token of advance authorization, please click <a href="/getAdvanceAuthorization">here</a></pre>
+	<form action="/refreshAdvanceAuthorization">
+		<input type="text" name="refresh_token" placeholder="refresh_token">
+		<input type="submit" value="Send">
+	</form> 
+<% else %>
+	<h4 style="margin-bottom: -18px;">DATA_RESPONSE</h4>
+	<pre>---
+	<% obj_res.sort.each do |k, v| %>
+		<% if k == "access_token" || k == "refresh_token" %>
+<%= k %>:
+<textarea style="width: 1260px; height: 211px; resize: none;" readonly><%= v %></textarea>
+		<% else %>
+			<% if v.class == Hash %>
+<%= k %>: 
+				<% v.sort.each do |ki, vi| %>
+  <%= ki %>: <%= vi %>
+				<% end %>
+			<% else %>
+<%= k %>: <%= v %>		
+			<% end %>
+		<% end %>
+    <% end %>
+</pre>
+<% end %>
+
+</br></br>---</br>
+<a href="/">Back</a>

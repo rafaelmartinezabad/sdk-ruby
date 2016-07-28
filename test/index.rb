@@ -3,82 +3,106 @@ require 'bundler/setup'
 require 'sinatra'
 require 'httparty'
 require 'json'
-require 'byebug' if development?
 
 require '../lib/NimbleAPI.rb'
-
-require './class/sendPayment.rb'
-require './class/getStatusByTransactionId.rb'
-require './class/getStatusByMerchantOrderId.rb'
-require './class/check.rb'
-require './class/updateMerchantOrderId.rb'
-require './class/getAuth3Url.rb'
-require './class/getAdvanceAuthorization.rb'
+Dir["./class/*.rb"].each {|file| require file }
 
 class Index < Sinatra::Base
 
-  def oNimbleAPI
-    sandbox = false
-    oNimbleAPI = NimbleAPI.new(
-      '729DFCD7A2B4643A0DA3D4A7E537FC6E',
-      'jg26cI3O1mB0$eR&fo6a2TWPmq&gyQoUOG6tClO%VE*N$SN9xX27@R4CTqi*$4EO',
-      sandbox
-    )
-    return oNimbleAPI
-  end
+  enable :sessions
 
   get '/' do
-    erb :index, :locals => {
-      obj_res: oNimbleAPI,
-      valid: Check.new.check( oNimbleAPI )['result']['code']
-    }
+    erb :index
   end
 
   get '/sendPayment' do
     erb :sendPayment, :locals => {
-      obj_res: SendPayment.new.sendPayment( oNimbleAPI )
+      obj_res: SendPayment.new.method( ClientCredentials.new )
     }
   end
 
   get '/getStatusByTransactionId' do
+    transactionId = request.params['transactionId']
+    res_obj = nil
+    if transactionId != nil && transactionId != ""
+      res_obj = GetStatusByTransactionId.new.method( ClientCredentials.new, transactionId )
+    end
     erb :getStatusByTransactionId, :locals => {
-      obj_res: GetStatusByTransactionId.new.getStatusByTransactionId( oNimbleAPI )
+      obj_res: res_obj
     }
   end
 
   get '/getStatusByMerchantOrderId' do
+    merchantOrderId = request.params['merchantOrderId']
+    res_obj = nil
+    if merchantOrderId != nil && merchantOrderId != ""
+      res_obj = GetStatusByMerchantOrderId.new.method( ClientCredentials.new, merchantOrderId )
+    end
     erb :getStatusByMerchantOrderId, :locals => {
-      obj_res: GetStatusByMerchantOrderId.new.getStatusByMerchantOrderId( oNimbleAPI )
+      obj_res: res_obj
     }
   end
 
   get '/check' do
+    cc = ClientCredentials.new
     erb :check, :locals => {
-      obj_res: Check.new.check( oNimbleAPI )
+      cc: cc, obj_res: Check.new.method( cc )
     }
   end
 
   get '/updateMerchantOrderId' do
+    transactionId = request.params['transactionId']
+    merchantOrderId = request.params['merchantOrderId']
+    if transactionId != nil && transactionId != "" && merchantOrderId != nil && merchantOrderId != ""
+      res_obj = UpdateMerchantOrderId.new.method( ClientCredentials.new, transactionId, merchantOrderId )
+    end
     erb :updateMerchantOrderId, :locals => {
-      obj_res: UpdateMerchantOrderId.new.updateMerchantOrderId( oNimbleAPI )
+      obj_res: res_obj
     }
   end
 
-  get '/getAuth3Url' do
-    erb :getAuth3Url, :locals => {
-      obj_res: GetAuth3Url.new.getAuth3Url( oNimbleAPI )
+  get '/getBasicAuthorization' do
+    erb :getBasicAuthorization, :locals => {
+      obj_res: GetBasicAuthorization.new.method( ClientCredentials.new )
     }
   end
 
   get '/getAdvanceAuthorization' do
-    code = request.env['QUERY_STRING'].to_s.gsub('code=', '')
-    if code != ""
-      erb :getAdvanceAuthorization, :locals => {
-        obj_res: GetAdvanceAuthorization.new.getAdvanceAuthorization( oNimbleAPI, code )
-      }
+    code = request.params['code']
+    if code == nil
+      res_obj = GetAuth3Url.new.method( ClientCredentials.new )
     else
-      redirect "/"
+      res_obj = GetAdvanceAuthorization.new.method( ClientCredentials.new, code )
+      if res_obj['access_token'] == "" || res_obj['refresh_token'] == ""
+        code = nil
+        res_obj = GetAuth3Url.new.method( ClientCredentials.new )
+      end
     end
+    erb :getAdvanceAuthorization, :locals => {
+      code: code != nil, obj_res: res_obj
+    }
+  end
+
+  get '/refreshAdvanceAuthorization' do
+    refresh_token = request.params['refresh_token']
+    res_obj = nil
+    if refresh_token != nil
+      res_obj = RefreshAdvanceAuthorization.new.method( ClientCredentials.new, refresh_token )
+    end
+    erb :refreshAdvanceAuthorization, :locals => {
+      obj_res: res_obj
+    }
+  end
+
+  get '/balance' do
+    access_token = request.params['access_token']
+    res_obj = nil
+    if access_token != nil
+      res_obj = Balance.new.method( ClientCredentials.new, access_token )
+    end
+    erb :balance, :locals => {
+      obj_res: res_obj
+    }
   end
 
   run! if app_file == $0

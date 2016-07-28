@@ -1,0 +1,20 @@
+<h1>GET_BASIC_AUTHORIZATION-TEST</h1>
+
+<h4 style="margin-bottom: -18px;">DATA_RESPONSE</h4>
+
+
+<% if obj_res != nil %>
+	<pre>---
+	<% obj_res.sort.each do |k, v| %>
+		<% if k == "access_token" %>
+<%= k %>:
+<textarea style="width: 1260px; height: 180px; resize: none;" readonly><%= v %></textarea>
+		<% else %>
+<%= k %>: <%= v %>
+		<% end %>
+    <% end %>
+	</pre>
+<% end %>
+
+</br></br>---</br>
+<a href="/">Back</a>

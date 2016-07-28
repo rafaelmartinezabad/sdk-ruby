@@ -8,7 +8,8 @@ class NimbleAPI
 
 			header = {
 				'Content-Type' => "application/json",
-				'Authorization' => "Tsec #{oNimbleAPI.getAccessToken}"
+				'Authorization' => "Tsec #{oNimbleAPI.getAccessToken}",
+				'Accept-Language' => oNimbleAPI.lang
 			}
 
 			return oNimbleAPI.restApiCall( url, header, "POST", oPayment)
