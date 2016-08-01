@@ -11,6 +11,7 @@ class Balance
   	  cc.clientSecret,
       cc.sandbox
     )
+    # get user_tsec to advance authorization method => getAdvanceAuthorization.rb
     return NimbleAPI::Account.new.balance( oNimbleAPI, user_tsec )
   end
 

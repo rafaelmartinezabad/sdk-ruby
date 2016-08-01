@@ -12,5 +12,17 @@ class NimbleAPI
 			
 			return oNimbleAPI.restApiCall( url, header, "GET")
         end
+
+        def cashout ( oNimbleAPI, user_tsec, oCashout )
+
+            url = oNimbleAPI.apiUrl("/v2/cashout")
+
+            header = {
+                'Content-Type' => "application/json",
+                'Authorization' => "Tsec #{user_tsec}"
+            }
+            
+            return oNimbleAPI.restApiCall( url, header, "POST", oCashout)
+        end
     end
 end

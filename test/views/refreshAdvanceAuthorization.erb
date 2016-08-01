@@ -1,12 +1,20 @@
+<title>REFRESH ADVANCE AUTHORIZATION</title>
+
 <h1>REFRESH_ADVANCE_AUTHORIZATION-TEST</h1>
 
 <% if obj_res == nil %>
-	<pre>If you don't have refresh_token of advance authorization, please click <a href="/getAdvanceAuthorization">here</a></pre>
-	<form action="/refreshAdvanceAuthorization">
-		<input type="text" name="refresh_token" placeholder="refresh_token">
-		<input type="submit" value="Send">
-	</form> 
+	<% if load_msg != 'OK' %>
+		<pre><%= load_msg %></pre>
+	<% end %>
+	<pre>You don't have a valid refresh_token of advance authorization, please click <a href="/getAdvanceAuthorization">here</a></pre>
 <% else %>
+	<% save_msg = obj_res['msg'] %>
+	<% obj_res = { 'access_token' => obj_res['access_token'], 'refresh_token' => obj_res['refresh_token'] } %>
+	<% if save_msg != 'OK' %>
+		<pre><%= save_msg %></pre>
+	<% else %>
+		<pre>this tokens save in ../session file</pre>
+	<% end %>
 	<h4 style="margin-bottom: -18px;">DATA_RESPONSE</h4>
 	<pre>---
 	<% obj_res.sort.each do |k, v| %>
@@ -24,7 +32,7 @@
 			<% end %>
 		<% end %>
     <% end %>
-</pre>
+	</pre>
 <% end %>
 
 </br></br>---</br>

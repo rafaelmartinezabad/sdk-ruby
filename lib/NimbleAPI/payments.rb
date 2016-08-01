@@ -50,5 +50,17 @@ class NimbleAPI
 			
 			return oNimbleAPI.restApiCall( url, header, "PUT", oMerchantOrderId)
 		end
+
+		def refund( oNimbleAPI, user_tsec, transactionId, oRefund )
+
+			url = oNimbleAPI.apiUrl("/v2/payments/#{transactionId}/refunds")
+
+            header = {
+                'Content-Type' => "application/json",
+                'Authorization' => "Tsec #{user_tsec}"
+            }
+            
+            return oNimbleAPI.restApiCall( url, header, "POST", oRefund)
+		end
 	end
 end

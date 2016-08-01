@@ -1,0 +1,45 @@
+<title>CASHOUT</title>
+
+<h1>CASHOUT-TEST</h1>
+
+<% if obj_res == nil %>
+	<% if load_msg != 'OK' %>
+		<pre><%= load_msg %></pre>
+	<% end %>
+	<pre>You don't have a valid access_token of advance authorization, please click <a href="/getAdvanceAuthorization">here</a></pre>
+<% else %>
+<% save_msg = obj_res['msg'] %>
+<% obj_res.delete('msg') %>
+<% otp_url = obj_res['otp_url'] %>
+<% obj_res.delete('otp_url') %>
+	<h4 style="margin-bottom: -18px;">DATA_RESPONSE</h4>
+	<!-- <pre><%= obj_res.to_yaml %></pre> -->
+	<pre>---
+	<% obj_res.each do |k, v| %>
+		<% if v.class == Hash %>
+<%= k %>:
+			<% v.each do |ki, vi| %>
+				<% if ki == "token" %>
+  <%= ki %>:
+  <textarea style="width: 1260px; height: 211px; resize: none;" readonly><%= vi %></textarea>
+				<% else %>
+  <%= ki %>: <%= vi %>
+  				<% end %>
+  			<% end %>
+		<% else %>
+<%= k %>: <%= v %>
+		<% end %>
+	<% end %>
+	</pre>
+
+	<% if save_msg != 'OK' %>
+		<pre><%= save_msg %></pre>
+	<% end %>
+<% if obj_res['result']['code'] == 428 %>
+	Next step -> Go to <a href="<%= otp_url %>">OTP</a>
+<% end %>
+
+<% end %>
+
+</br></br>---</br>
+<a href="/">Back</a>

@@ -1,11 +1,12 @@
+<title>BALANCE</title>
+
 <h1>BALANCE-TEST</h1>
 
 <% if obj_res == nil %>
-	<pre>If you don't have access_token of advance authorization, please click <a href="/getAdvanceAuthorization">here</a></pre>
-	<form action="/balance">
-		<input type="text" name="access_token" placeholder="access_token">
-		<input type="submit" value="Send">
-	</form> 
+	<% if load_msg != 'OK' %>
+		<pre><%= load_msg %></pre>
+	<% end %>
+	<pre>You don't have a valid access_token of advance authorization, please click <a href="/getAdvanceAuthorization">here</a></pre>
 <% else %>
 	<h4 style="margin-bottom: -18px;">DATA_RESPONSE</h4>
 	<pre><%= obj_res.to_yaml %></pre>

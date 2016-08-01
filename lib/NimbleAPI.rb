@@ -28,10 +28,6 @@ class NimbleAPI
 		return @refresh_token
 	end
 
-	def getRefreshToken
-		return @refresh_token
-	end
-
 	def getAccessToken
 		if @access_token == nil
 			@access_token = ""
@@ -57,6 +53,16 @@ class NimbleAPI
 		end
 	end
 
+	def refreshToken( refresh_token )
+		raa = NimbleAPI::Auth.new( @clientId, @clientSecret ).refreshAdvanceAuthorization( refresh_token )
+		@access_token = ""
+		@refresh_token = ""
+		if raa != nil && defined? raa['access_token'] && defined? raa['refresh_token']
+			@access_token = raa['access_token']
+			@refresh_token = raa['refresh_token']			
+		end
+	end
+
 	def apiUrl (path = "")
 		url_base = NimbleAPI::Config::NIMBLE_API_BASE_URL
 		if @sandbox == 'true' || @sandbox == true
@@ -67,6 +73,10 @@ class NimbleAPI
 
 	def getAuth3Url
 		return NimbleAPI::Config::OAUTH3_URL_AUTH + "?client_id=#{@clientId}&response_type=code"
+	end
+
+	def getCashOutUrl( ticket, back_url )
+		return NimbleAPI::Config::OTP_URL + "?ticket=#{ticket}&back_url=#{back_url}"
 	end
 
 	def restApiCall ( url = "", header = {}, method = "", body = {})
@@ -89,11 +99,6 @@ class NimbleAPI
 		rescue Exception => msg
 			return nil
 		end
-		case response
-		when Net::HTTPSuccess
-			return JSON.parse(response.body)
-		else
-			return nil
-		end
+		return JSON.parse(response.body)
 	end
 end

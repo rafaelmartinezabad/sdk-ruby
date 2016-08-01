@@ -1,8 +1,8 @@
 require 'rubygems' if RUBY_VERSION < '1.9'
 
 class NimbleAPI
-    class Credentials
-        def check ( oNimbleAPI )
+    class Environment
+        def verification ( oNimbleAPI )
 
             url = oNimbleAPI.apiUrl("/check")
 

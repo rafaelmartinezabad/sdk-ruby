@@ -1,8 +1,17 @@
+<title>GET ADVANCE AUTHORIZATION</title>
+
 <h1>GET_ADVANCE_AUTHORIZATION-TEST</h1>
 
 <% if code != true %>
 	<pre>Step 1 -> <a href="<%= obj_res %>">getAuth3</a></pre>
 <% else %>
+	<% save_msg = obj_res['msg'] %>
+	<% if save_msg != 'OK' %>
+		<pre><%= save_msg %></pre>
+	<% else %>
+		<pre>this tokens save in ../session file</pre>
+	<% end %>
+	<% obj_res = { 'access_token' => obj_res['access_token'], 'refresh_token' => obj_res['refresh_token'] } %>
 	<h4 style="margin-bottom: -18px;">DATA_RESPONSE</h4>
 	<pre>---
 	<% obj_res.sort.each do |k, v| %>

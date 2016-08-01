@@ -1,0 +1,25 @@
+<title>VERIFICATION</title>
+
+<h1>VERIFICATION-TEST</h1>
+
+<pre>
+<% cc.instance_variables.each do |k| %>
+	<% case k.to_s %>
+	<% when "@sandbox" %>
+		<% if cc.instance_variable_get(k) %>
+Sandbox: YES
+		<% else %>
+Sandbox: NO
+		<% end %>
+	<% when "@clientId" %>
+API client id: <%= cc.instance_variable_get(k).to_s %>
+	<% else # @clientSecret %>
+Client secret: <%= cc.instance_variable_get(k).to_s %>
+	<% end %>
+<% end %>
+</pre>
+<h4 style="margin-bottom: -18px;">DATA_RESPONSE</h4>
+<pre><%= obj_res.to_yaml %></pre>
+
+</br></br>---</br>
+<a href="/">Back</a>

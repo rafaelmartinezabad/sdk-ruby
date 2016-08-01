@@ -3,7 +3,7 @@ require 'bundler/setup'
 
 require '../lib/NimbleAPI.rb'
 
-class Check
+class Verification
 
   def method( cc )
   	oNimbleAPI = NimbleAPI.new(
@@ -11,7 +11,7 @@ class Check
   	  cc.clientSecret,
       cc.sandbox
     )
-    return NimbleAPI::Credentials.new.check( oNimbleAPI )
+    return NimbleAPI::Environment.new.verification( oNimbleAPI )
   end
 
 end
