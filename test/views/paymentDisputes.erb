@@ -1,0 +1,20 @@
+<title>PAYMENT DISPUTES</title>
+
+<h1>PAYMENT_DISPUTES-TEST</h1>
+
+<% if load_msg == "OK" %>
+	<% if obj_res == nil %>
+		<form action="/paymentdisputes">
+			<input type="text" name="transactionId" placeholder="transactionId">
+			<input type="submit" value="Send">
+		</form> 
+	<% else %>
+		<h4 style="margin-bottom: -18px;">DATA_RESPONSE</h4>
+		<pre><%= obj_res.to_yaml %></pre>
+	<% end %>
+<% else %>
+	<pre><%= load_msg %></pre>
+<% end %>
+
+</br></br>---</br>
+<a href="/">Back</a>

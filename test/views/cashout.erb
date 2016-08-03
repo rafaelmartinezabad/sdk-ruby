@@ -13,7 +13,6 @@
 <% otp_url = obj_res['otp_url'] %>
 <% obj_res.delete('otp_url') %>
 	<h4 style="margin-bottom: -18px;">DATA_RESPONSE</h4>
-	<!-- <pre><%= obj_res.to_yaml %></pre> -->
 	<pre>---
 	<% obj_res.each do |k, v| %>
 		<% if v.class == Hash %>

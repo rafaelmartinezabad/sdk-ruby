@@ -75,7 +75,7 @@ class NimbleAPI
 		return NimbleAPI::Config::OAUTH3_URL_AUTH + "?client_id=#{@clientId}&response_type=code"
 	end
 
-	def getCashOutUrl( ticket, back_url )
+	def self.getOtpUrl( ticket, back_url )
 		return NimbleAPI::Config::OTP_URL + "?ticket=#{ticket}&back_url=#{back_url}"
 	end
 
@@ -99,6 +99,8 @@ class NimbleAPI
 		rescue Exception => msg
 			return nil
 		end
-		return JSON.parse(response.body)
+		res = nil
+		res = JSON.parse(response.body) if response.body != ""
+		return res
 	end
 end

@@ -1,4 +1,5 @@
 require 'rubygems' if RUBY_VERSION < '1.9'
+require 'uri'
 
 class NimbleAPI
 	class Payments
@@ -61,6 +62,59 @@ class NimbleAPI
             }
             
             return oNimbleAPI.restApiCall( url, header, "POST", oRefund)
+		end
+
+		def paymentDetails( oNimbleAPI, user_tsec, transactionId, extendedData = false )
+
+			opt = ""
+			opt = "?extendedData=true" if extendedData
+
+			url = oNimbleAPI.apiUrl("/v2/payments/#{transactionId}#{opt}")
+
+			header = {
+				'Content-Type' => "application/json",
+				'Authorization' => "Tsec #{user_tsec}"
+			}
+
+			return oNimbleAPI.restApiCall( url, header, "GET")
+		end
+
+		def paymentsList( oNimbleAPI, user_tsec, filters = [] )
+
+			uri = URI(oNimbleAPI.apiUrl("/v2/payments"))
+			uri.query = URI.encode_www_form(filters)
+			url = uri.to_s
+
+			header = {
+				'Content-Type' => "application/json",
+				'Authorization' => "Tsec #{user_tsec}"
+			}
+
+			return oNimbleAPI.restApiCall( url, header, "GET")
+		end
+
+		def paymentRefunds( oNimbleAPI, user_tsec, transactionId )
+
+			url = oNimbleAPI.apiUrl("/v2/payments/#{transactionId}/refunds")
+
+			header = {
+				'Content-Type' => "application/json",
+				'Authorization' => "Tsec #{user_tsec}"
+			}
+
+			return oNimbleAPI.restApiCall( url, header, "GET")
+		end
+
+		def paymentDisputes( oNimbleAPI, user_tsec, transactionId )
+
+			url = oNimbleAPI.apiUrl("/v2/payments/#{transactionId}/disputes")
+
+			header = {
+				'Content-Type' => "application/json",
+				'Authorization' => "Tsec #{user_tsec}"
+			}
+
+			return oNimbleAPI.restApiCall( url, header, "GET")
 		end
 	end
 end

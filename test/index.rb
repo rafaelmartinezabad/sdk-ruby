@@ -213,12 +213,10 @@ class Index < Sinatra::Base
     if access_token != nil && access_token != ""
       res_obj = Cashout.new.method( self, ClientCredentials.new, access_token )
       if res_obj != nil && res_obj['result']['code'] == 428
-        res_obj['otp_url'] = GetOtpUrl.new.method( 
-          ClientCredentials.new, 
+        res_obj['otp_url'] = GetOtpUrl.new.method(
           res_obj['data']['ticket'], 
           "#{request.env['HTTP_REFERER']}getAdvanceAuthorization"
         )
-        puts "#{request.env['HTTP_REFERER']}getAdvanceAuthorization"
       end
     end
     erb :cashout, :locals => {
@@ -233,8 +231,7 @@ class Index < Sinatra::Base
     if transactionId != nil && transactionId != "" && access_token != nil && access_token != ""
       res_obj = Refund.new.method( self, ClientCredentials.new, access_token, transactionId )
       if res_obj != nil && res_obj['result']['code'] == 428
-        res_obj['otp_url'] = GetOtpUrl.new.method( 
-          ClientCredentials.new, 
+        res_obj['otp_url'] = GetOtpUrl.new.method(
           res_obj['data']['ticket'], 
           "#{request.env['HTTP_REFERER'].gsub('refund', '')}getAdvanceAuthorization"
         )
@@ -242,6 +239,137 @@ class Index < Sinatra::Base
     end
     erb :refund, :locals => {
       load_msg: msg, obj_res: res_obj
+    }
+  end
+
+  get '/paymentdetails' do
+    res_obj = nil
+    s = loadOAuth3
+    if s['access_token'] != nil
+      transactionId = request.params['transactionId']
+      if transactionId != nil && transactionId != ""
+        res_obj = PaymentDetails.new.method( ClientCredentials.new, s['access_token'], transactionId )
+      end
+    end
+    erb :paymentDetails, :locals => {
+      load_msg: s['msg'], obj_res: res_obj
+    }
+  end
+
+  get '/paymentslist' do
+    res_obj = nil
+    s = loadOAuth3
+    if s['access_token'] != nil
+      res_obj = PaymentsList.new.method( ClientCredentials.new, s['access_token'] )
+    end
+    erb :paymentsList, :locals => {
+      load_msg: s['msg'], obj_res: res_obj
+    }
+  end
+
+  get '/paymentrefunds' do
+    res_obj = nil
+    s = loadOAuth3
+    if s['access_token'] != nil
+      transactionId = request.params['transactionId']
+      if transactionId != nil && transactionId != ""
+        res_obj = PaymentRefunds.new.method( ClientCredentials.new, s['access_token'], transactionId )
+      end
+    end
+    erb :paymentRefunds, :locals => {
+      load_msg: s['msg'], obj_res: res_obj
+    }
+  end
+
+  get '/paymentdisputes' do
+    res_obj = nil
+    s = loadOAuth3
+    if s['access_token'] != nil
+      transactionId = request.params['transactionId']
+      if transactionId != nil && transactionId != ""
+        res_obj = PaymentDisputes.new.method( ClientCredentials.new, s['access_token'], transactionId )
+      end
+    end
+    erb :paymentDisputes, :locals => {
+      load_msg: s['msg'], obj_res: res_obj
+    }
+  end
+
+  get '/paymentslistfilterbydate' do
+    res_obj = nil
+    s = loadOAuth3
+    if s['access_token'] != nil
+      res_obj = PaymentsListFilterByDate.new.method( ClientCredentials.new, s['access_token'] )
+    end
+    erb :paymentsListFilterByDate, :locals => {
+      load_msg: s['msg'], obj_res: res_obj
+    }
+  end
+
+  get '/paymentslistfilterbymerchantorderid' do
+    res_obj = nil
+    s = loadOAuth3
+    if s['access_token'] != nil
+      res_obj = PaymentsListFilterByMerchantOrderId.new.method( ClientCredentials.new, s['access_token'] )
+    end
+    erb :paymentsListFilterByMerchantOrderId, :locals => {
+      load_msg: s['msg'], obj_res: res_obj
+    }
+  end
+
+  get '/paymentslistfilterbystate' do
+    res_obj = nil
+    s = loadOAuth3
+    if s['access_token'] != nil
+      res_obj = PaymentsListFilterByState.new.method( ClientCredentials.new, s['access_token'] )
+    end
+    erb :paymentsListFilterByState, :locals => {
+      load_msg: s['msg'], obj_res: res_obj
+    }
+  end
+
+  get '/paymentslistfilterbyhasrefunds' do
+    res_obj = nil
+    s = loadOAuth3
+    if s['access_token'] != nil
+      res_obj = PaymentsListFilterByHasRefunds.new.method( ClientCredentials.new, s['access_token'] )
+    end
+    erb :paymentsListFilterByHasRefunds, :locals => {
+      load_msg: s['msg'], obj_res: res_obj
+    }
+  end
+
+  get '/paymentslistfilterbyhasdisputes' do
+    res_obj = nil
+    s = loadOAuth3
+    if s['access_token'] != nil
+      res_obj = PaymentsListFilterByHasDisputes.new.method( ClientCredentials.new, s['access_token'] )
+    end
+    erb :paymentsListFilterByHasDisputes, :locals => {
+      load_msg: s['msg'], obj_res: res_obj
+    }
+  end
+
+  get '/paymentslistfilterbyentryreference' do
+    res_obj = nil
+    s = loadOAuth3
+    if s['access_token'] != nil
+      res_obj = PaymentsListFilterByEntryReference.new.method( ClientCredentials.new, s['access_token'] )
+    end
+    erb :paymentsListFilterByEntryReference, :locals => {
+      load_msg: s['msg'], obj_res: res_obj
+    }
+  end
+
+  get '/paymentslistfilterbypagination' do
+    res_obj = nil
+    s = loadOAuth3
+    if s['access_token'] != nil
+      itemReference = request.params['itemReference']
+      res_obj = PaymentsListFilterByPagination.new.method( ClientCredentials.new, s['access_token'], itemReference )
+    end
+    erb :paymentsListFilterByPagination, :locals => {
+      load_msg: s['msg'], obj_res: res_obj
     }
   end
 
