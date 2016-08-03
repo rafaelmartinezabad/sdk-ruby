@@ -1,7 +1,7 @@
 require 'rubygems'
 require 'bundler/setup'
 
-class ClientCredentialsSample
+class ClientCredentials
 
 	attr_reader :clientId, :clientSecret, :sandbox
 

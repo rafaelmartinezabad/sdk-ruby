@@ -288,7 +288,7 @@ Next example steps asumes working with Ubuntu 14.04 LTS, Apache2 and ruby 2.3.1p
 ```bash
 cd /var/www
 git clone https://github.com/nimblepayments/sdk-ruby.git
-cp sdk-ruby/test/class/gateway_config_sample.rb sdk-ruby/test/class/gateway_config.rb
+cp sdk-ruby/test/class/gateway_config_sample.rb_sample sdk-ruby/test/class/gateway_config.rb
 ```
 ### 2. Enter your Nimble Payments gateway credentials
 Obtain it from [www.nimblepayments.com](https://www.nimblepayments.com/)
