@@ -24,7 +24,7 @@ Example code tests
 - It includes the single payment service
 
 ## Requirements
-* ruby 2.3.1p112 (2016-04-26 revision 54768) or above
+* ruby 2.3.1 or above
 
 ## Installation
 The SDK zip from the GitHub repository contains the NimblePayments SDK for Ruby tool, including all its dependencies. Follow the next steps to install it:
@@ -285,7 +285,7 @@ response = NimbleAPI::Payments.new.refund( oNimbleAPI, user_tsec, transactionId,
 
 In `./test` folder you will find scripts implementing a basics operations that uses NimblePayments SDK as payment platform.
 
-Next example steps asumes working with Ubuntu 14.04 LTS, Apache2 and ruby 2.3.1p112 (2016-04-26 revision 54768) or above.
+Next example steps asumes working with Ubuntu 14.04 LTS, Apache2, ruby 2.3.1 and bundler 1.12.5.
 ### 1. Download code
 ```bash
 cd /var/www
