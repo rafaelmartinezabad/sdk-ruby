@@ -149,8 +149,8 @@ merchantOrderId = 'idSample12345' # A real merchantOrderId the same as oPayment 
 response = NimbleAPI::Payments.new.getStatusByMerchantOrderId( oNimbleAPI, merchantOrderId )
 ```
 
-### (#example4) Example 4: 3-legged OAuth flow
-Services that access to client information such as refunds and cashout need a 3-legged OAuth flow  authorization. In order to obtain a 3-legged Oath token, please follow the steps bellow:
+### Example 4: 3-legged OAuth flow
+Services that access to client information such as refunds and cashout need a 3-legged OAuth flow  authorization. In order to obtain a 3-legged OAuth token, please follow the steps bellow:
 
 #### Step 1 - Open authorization url
 ```ruby
@@ -177,6 +177,8 @@ oNimbleAPI = NimbleAPI.new(
     '729DFCD7A2B4643A0DA3D4A7E537FC6E', # a valid Api_Client_Id
     'jg26cI3O1mB0$eR&fo6a2TWPmq&gyQoUOG6tClO%VE*N$SN9xX27@R4CTqi*$4EO' # a valid Client_Secret
 )
+
+code = request.params['code']
 
 oNimbleAPI.authorize( code )
 
@@ -293,6 +295,13 @@ cp sdk-ruby/test/class/gateway_config_sample.rb_sample sdk-ruby/test/class/gatew
 ### 2. Enter your Nimble Payments gateway credentials
 Obtain it from [www.nimblepayments.com](https://www.nimblepayments.com/)
 
+Create new gateway with the following options:
+```
+Where do you use? -> Own development
+URL -> http://nimblesdkruby.com
+URL redirection -> http://nimblesdkruby.com/getAdvanceAuthorization
+```
+
 Use your favorite text editor to modify `sdk-ruby/test/class/gateway_config.rb`
 ```bash
 nano sdk-ruby/test/class/gateway_config.rb
@@ -316,9 +325,17 @@ Add a new line on /etc/hosts:
 ### 5. Enable virtual host and restart apache:
 ```bash
 sudo a2ensite nimble-sdk-ruby.conf
+sudo a2enmod proxy
+sudo a2enmod proxy_http
 sudo service apache2 restart
 ```
-### 6. Open sample domain
+### 6. Start ruby tests
+```bash
+cd /var/www/sdk-ruby/test
+bundle install
+ruby index.rb
+```
+### 7. Open sample domain
 Open on your navigation [nimblesdkruby.com](http://nimblesdkruby.com/)
 
 ##Environment
